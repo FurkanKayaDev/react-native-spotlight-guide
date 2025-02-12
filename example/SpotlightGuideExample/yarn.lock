@@ -5797,13 +5797,14 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-"react-native-spotlight-guide@file:../..":
-  version "1.0.0"
-  resolved "file:../.."
+react-native-spotlight-guide@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/react-native-spotlight-guide/-/react-native-spotlight-guide-1.0.5.tgz"
+  integrity sha512-vI4xTBU/m6yoYTFI6gEFNvdg6LxsaUpKoZbs9V5o2nN6MTVqfdfMI42FnMN1vIAgZmk5mSeSZzrWP4hBvHb+EA==
   dependencies:
-    react-native-svg "^13.14.0"
+    react-native-svg ">=13.0.0"
 
-react-native-svg@^13.14.0:
+react-native-svg@^13.14.0, react-native-svg@>=13.0.0:
   version "13.14.1"
   resolved "https://registry.npmjs.org/react-native-svg/-/react-native-svg-13.14.1.tgz"
   integrity sha512-0DSa0EOySzV0J9utmRFVE5Vr4mKRXA7GtH1Ga1B6fzR967HGFW1ytH6hmnOf36316hjYpXMMB7s4oVe1FqghlQ==

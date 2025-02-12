@@ -68,28 +68,32 @@ const SpotlightGuide = ({ children, isVisible, content, spotlightShape = "rectan
     };
     const measureChild = () => {
         if (childRef.current) {
-            childRef.current.measureInWindow((x, y, width, height) => {
-                if (typeof x === "number" &&
-                    typeof y === "number" &&
-                    typeof width === "number" &&
-                    typeof height === "number" &&
-                    !isNaN(x) &&
-                    !isNaN(y) &&
-                    !isNaN(width) &&
-                    !isNaN(height)) {
-                    setChildMeasures({
-                        x,
-                        y,
-                        width,
-                        height,
-                        pageX: x,
-                        pageY: y,
-                    });
-                }
-                else {
-                    attemptMeasurement();
-                }
-            });
+            try {
+                childRef.current.measureInWindow((x, y, width, height) => {
+                    // Ölçüm değerlerinin geçerli olduğundan emin olalım
+                    const validMeasures = {
+                        x: x || 0,
+                        y: y || 0,
+                        width: width || 0,
+                        height: height || 0,
+                        pageX: x || 0,
+                        pageY: y || 0,
+                    };
+                    setChildMeasures(validMeasures);
+                });
+            }
+            catch (error) {
+                console.warn("Measure error:", error);
+                // Varsayılan değerler atayalım
+                setChildMeasures({
+                    x: 0,
+                    y: 0,
+                    width: 0,
+                    height: 0,
+                    pageX: 0,
+                    pageY: 0,
+                });
+            }
         }
     };
     const startAnimation = () => {
@@ -112,10 +116,17 @@ const SpotlightGuide = ({ children, isVisible, content, spotlightShape = "rectan
         };
     };
     const getSpotlightMask = () => {
-        if (!childMeasures)
-            return null;
-        const { pageX, pageY, width: childWidth, height: childHeight, } = childMeasures;
-        const padding = spotlightPadding;
+        if (!childMeasures) {
+            return {
+                x: 0,
+                y: 0,
+                width: 0,
+                height: 0,
+                borderRadius: 0,
+            };
+        }
+        const { pageX = 0, pageY = 0, width: childWidth = 0, height: childHeight = 0, } = childMeasures;
+        const padding = spotlightPadding || 0;
         if (typeof pageX !== "number" ||
             typeof pageY !== "number" ||
             typeof childWidth !== "number" ||
@@ -316,19 +327,20 @@ const SpotlightGuide = ({ children, isVisible, content, spotlightShape = "rectan
                 contentContainerStyle,
                 getAnimationStyle(),
             ]}>
-        <react_native_1.Text style={[styles.contentText, contentTextStyle]}>{content}</react_native_1.Text>
+        {content && (<react_native_1.Text style={[styles.contentText, contentTextStyle]}>{content}</react_native_1.Text>)}
         <react_native_1.View style={[styles.buttonContainer, buttonContainerStyle]}>
           {onPrev && (<react_native_1.TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPrev}>
               <react_native_1.Text style={[styles.buttonText, buttonTextStyle]}>
                 {prevButtonText || "Previous"}
               </react_native_1.Text>
             </react_native_1.TouchableOpacity>)}
-          <react_native_1.TouchableOpacity style={[styles.button, buttonStyle]} onPress={onNext || onFinish}>
-            <react_native_1.Text style={[styles.buttonText, buttonTextStyle]}>
-              {nextButtonText ||
-                (onNext ? "Next" : finishButtonText || "Finish")}
-            </react_native_1.Text>
-          </react_native_1.TouchableOpacity>
+          {(onNext || onFinish) && (<react_native_1.TouchableOpacity style={[styles.button, buttonStyle]} onPress={onNext || onFinish}>
+              <react_native_1.Text style={[styles.buttonText, buttonTextStyle]}>
+                {onNext
+                    ? nextButtonText || "Next"
+                    : finishButtonText || "Finish"}
+              </react_native_1.Text>
+            </react_native_1.TouchableOpacity>)}
         </react_native_1.View>
       </react_native_1.Animated.View>);
     };

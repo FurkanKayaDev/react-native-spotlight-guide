@@ -10,7 +10,7 @@ import {
   Dimensions,
   TextStyle,
 } from 'react-native';
-import {SpotlightGuide} from '../../src';
+import {SpotlightGuide} from 'react-native-spotlight-guide';
 
 const {width} = Dimensions.get('window');
 const CARD_WIDTH = width - 32;
@@ -192,7 +192,13 @@ function App(): React.JSX.Element {
         {/* Circle Spotlight */}
         <SpotlightGuide
           isVisible={showGuide && currentStep === 0}
-          {...steps[0]}
+          content={steps[0].content}
+          spotlightShape={steps[0].spotlightShape}
+          contentPosition={steps[0].contentPosition}
+          overlayColor={steps[0].overlayColor}
+          onPressOverlay={steps[0].onPressOverlay}
+          contentContainerStyle={steps[0].contentContainerStyle}
+          contentTextStyle={steps[0].contentTextStyle}
           onNext={handleNext}>
           <TouchableOpacity style={styles.avatarContainer}>
             <View style={styles.avatar}>
@@ -215,7 +221,15 @@ function App(): React.JSX.Element {
         {/* Rectangle Spotlight with Custom Content */}
         <SpotlightGuide
           isVisible={showGuide && currentStep === 1}
-          {...steps[1]}
+          content={steps[1].content}
+          contentPosition={steps[1].contentPosition}
+          overlayColor={steps[1].overlayColor}
+          onPressOverlay={steps[1].onPressOverlay}
+          contentContainerStyle={steps[1].contentContainerStyle}
+          contentTextStyle={steps[1].contentTextStyle}
+          buttonContainerStyle={steps[1].buttonContainerStyle}
+          buttonStyle={steps[1].buttonStyle}
+          buttonTextStyle={steps[1].buttonTextStyle}
           onNext={handleNext}
           onPrev={handlePrev}>
           <View style={styles.analyticsCard}>
@@ -272,7 +286,16 @@ function App(): React.JSX.Element {
         {/* Oval Spotlight yerine yeni örnek */}
         <SpotlightGuide
           isVisible={showGuide && currentStep === 2}
-          {...steps[2]}
+          content={steps[2].content}
+          spotlightShape={steps[2].spotlightShape}
+          contentPosition={steps[2].contentPosition}
+          overlayColor={steps[2].overlayColor}
+          onPressOverlay={steps[2].onPressOverlay}
+          animationDuration={steps[2].animationDuration}
+          contentContainerStyle={steps[2].contentContainerStyle}
+          contentTextStyle={steps[2].contentTextStyle}
+          buttonStyle={steps[2].buttonStyle}
+          buttonTextStyle={steps[2].buttonTextStyle}
           onPrev={handlePrev}
           onNext={handleNext}>
           <View style={styles.activitiesCard}>
@@ -344,7 +367,13 @@ function App(): React.JSX.Element {
         {/* Custom Spotlight */}
         <SpotlightGuide
           isVisible={showGuide && currentStep === 3}
-          {...steps[3]}
+          content={steps[3].content}
+          spotlightShape={steps[3].spotlightShape}
+          contentPosition={steps[3].contentPosition}
+          overlayColor={steps[3].overlayColor}
+          customShape={steps[3].customShape}
+          contentContainerStyle={steps[3].contentContainerStyle}
+          contentTextStyle={steps[3].contentTextStyle}
           onPrev={handlePrev}
           onFinish={() => setShowGuide(false)}>
           <View style={styles.customSpotlightCard}>
