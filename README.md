@@ -20,6 +20,14 @@
   </p>
 </div>
 
+## 🎥 Demo
+
+<div align="center">
+  <video src="Demo/demo.mp4" width="300" controls>
+    <a href="Demo/demo.mp4">Demo videosu için tıklayın</a>
+  </video>
+</div>
+
 ## ✨ Features
 
 - 🎨 Four spotlight shapes: rectangle, circle, oval, and custom

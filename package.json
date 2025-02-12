@@ -1,6 +1,6 @@
 {
   "name": "react-native-spotlight-guide",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A modern, customizable and high-performance spotlight/walkthrough library for React Native with TypeScript support",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -54,6 +54,13 @@
     "react-native": "*",
     "react-native-svg": ">=13.0.0"
   },
+  "files": [
+    "lib/",
+    "src/",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ],
   "dependencies": {
     "react-native-svg": "^13.14.0"
   },
