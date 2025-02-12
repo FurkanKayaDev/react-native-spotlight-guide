@@ -20,7 +20,8 @@
 
 ## 🎥 Demo
 
-![]([https://github.com/Repository_Name/GIF_Name.gif'iniz](https://github.com/FurkanKayaDev/react-native-spotlight-guide/blob/main/demo/demo.gif))
+![](https://github.com/FurkanKayaDev/react-native-spotlight-guide/blob/main/demo/demo.gif)
+
 
 ## ✨ Features
 
