@@ -22,9 +22,8 @@
 
 ## 🎥 Demo
 
-<div align="center">
-  <img src="Demo/demo.gif" alt="React Native Spotlight Guide Demo" width="300"/>
-</div>
+![]([https://github.com/Repository_Name/GIF_Name.gif'iniz](https://github.com/FurkanKayaDev/react-native-spotlight-guide/blob/main/demo/demo.gif
+))
 
 ## ✨ Features
 
