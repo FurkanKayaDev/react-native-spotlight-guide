@@ -7,17 +7,36 @@ import {
   TouchableOpacity,
   Text,
   Dimensions,
-  ViewStyle,
-  TextStyle,
   LayoutRectangle,
   LayoutChangeEvent,
-  ScrollView,
-  findNodeHandle,
+  ViewStyle,
+  TextStyle,
 } from "react-native";
 import Svg, { Defs, Rect, Circle, Mask } from "react-native-svg";
 
 export type SpotlightShape = "circle" | "oval" | "rectangle" | "custom";
 export type ContentPosition = "top" | "bottom" | "left" | "right";
+
+/**
+ * Interface for custom spotlight shape properties
+ * @interface CustomSpotlightShape
+ * @param {number} width - Width of the custom spotlight shape in pixels
+ * @param {number} height - Height of the custom spotlight shape in pixels
+ * @param {number} [offsetX] - Optional horizontal offset from the center in pixels
+ * @param {number} [offsetY] - Optional vertical offset from the center in pixels
+ * @param {number} [borderRadius] - Optional border radius for the spotlight shape in pixels
+ * @param {string} [backgroundColor] - Optional background color for the spotlight area
+ * @param {number} [borderWidth] - Optional border width for the spotlight shape in pixels
+ * @param {string} [borderColor] - Optional border color for the spotlight shape
+ * @param {ViewStyle["borderStyle"]} [borderStyle] - Optional border style (solid, dashed, dotted)
+ * @param {string} [shadowColor] - Optional shadow color for the spotlight shape
+ * @param {ViewStyle["shadowOffset"]} [shadowOffset] - Optional shadow offset {width: number, height: number}
+ * @param {number} [shadowOpacity] - Optional shadow opacity (0-1)
+ * @param {number} [shadowRadius] - Optional shadow blur radius in pixels
+ * @param {number} [elevation] - Optional elevation for Android shadow
+ * @param {number} [opacity] - Optional opacity for the entire spotlight shape (0-1)
+ * @param {number} [padding] - Optional padding around the spotlight shape in pixels
+ */
 
 interface CustomSpotlightShape extends Record<string, any> {
   width: number;
@@ -25,6 +44,68 @@ interface CustomSpotlightShape extends Record<string, any> {
   offsetX?: number;
   offsetY?: number;
 }
+
+/**
+ * Interface for spotlight mask dimensions and position
+ * @interface SpotlightMask
+ * @param {number} x - X coordinate of the mask from the left edge of the screen in pixels
+ * @param {number} y - Y coordinate of the mask from the top edge of the screen in pixels
+ * @param {number} width - Width of the spotlight mask in pixels
+ * @param {number} height - Height of the spotlight mask in pixels
+ * @param {number} [borderRadius] - Optional border radius of the mask in pixels, used for rectangle and custom shapes
+ */
+
+interface SpotlightMask {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  borderRadius?: number;
+}
+
+/**
+ * SpotlightGuide Component
+ * A component that creates a spotlight effect to highlight UI elements with a guided tour.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - The component to be highlighted
+ * @param {boolean} props.isVisible - Controls the visibility of the spotlight guide
+ * @param {string} props.content - Text content to be displayed in the guide
+ * @param {SpotlightShape} [props.spotlightShape="rectangle"] - Shape of the spotlight (circle, oval, rectangle, custom)
+ * @param {CustomSpotlightShape} [props.customShape] - Properties for custom spotlight shape when spotlightShape is "custom"
+ * @param {number} [props.spotlightPadding=10] - Padding around the spotlight area in pixels
+ * @param {number} [props.overlayOpacity=0.7] - Opacity of the overlay background (0-1)
+ * @param {string} [props.overlayColor="rgba(0, 0, 0, 0.7)"] - Color of the overlay background in rgba or hex
+ * @param {() => void} [props.onNext] - Callback function when next button is pressed
+ * @param {() => void} [props.onPrev] - Callback function when previous button is pressed
+ * @param {() => void} [props.onFinish] - Callback function when finish button is pressed
+ * @param {() => void} [props.onPressOverlay] - Callback function when overlay is pressed
+ * @param {number} [props.animationDuration=300] - Duration of animations in milliseconds
+ * @param {ContentPosition} [props.contentPosition="bottom"] - Position of the content relative to spotlight (top, bottom, left, right)
+ * @param {ViewStyle} [props.contentContainerStyle] - Custom styles for the content container
+ * @param {TextStyle} [props.contentTextStyle] - Custom styles for the content text
+ * @param {ViewStyle} [props.buttonContainerStyle] - Custom styles for the button container
+ * @param {ViewStyle} [props.buttonStyle] - Custom styles for the buttons
+ * @param {TextStyle} [props.buttonTextStyle] - Custom styles for the button text
+ * @param {string} [props.prevButtonText="Previous"] - Custom text for the previous button
+ * @param {string} [props.nextButtonText="Next"] - Custom text for the next button
+ * @param {string} [props.finishButtonText="Finish"] - Custom text for the finish button
+ *
+ * @example
+ * ```tsx
+ * <SpotlightGuide
+ *   isVisible={true}
+ *   content="This is a sample spotlight guide"
+ *   spotlightShape="circle"
+ *   onNext={() => console.log('Next')}
+ * >
+ *   <View>
+ *     <Text>Highlighted Content</Text>
+ *   </View>
+ * </SpotlightGuide>
+ * ```
+ */
 
 export interface SpotlightGuideProps {
   children: React.ReactNode;
@@ -38,27 +119,22 @@ export interface SpotlightGuideProps {
   onNext?: () => void;
   onPrev?: () => void;
   onFinish?: () => void;
+  onPressOverlay?: () => void;
   animationDuration?: number;
   contentPosition?: ContentPosition | string;
-  contentContainerStyle?: Record<string, any>;
-  contentTextStyle?: Record<string, any>;
-  buttonContainerStyle?: Record<string, any>;
-  buttonStyle?: Record<string, any>;
-  buttonTextStyle?: Record<string, any>;
+  contentContainerStyle?: ViewStyle;
+  contentTextStyle?: TextStyle;
+  buttonContainerStyle?: ViewStyle;
+  buttonStyle?: ViewStyle;
+  buttonTextStyle?: TextStyle;
+  prevButtonStyle?: ViewStyle;
+  prevButtonTextStyle?: TextStyle;
   prevButtonText?: string;
   nextButtonText?: string;
   finishButtonText?: string;
 }
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
-
-interface SpotlightMask {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  borderRadius?: number;
-}
 
 export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
   children,
@@ -72,6 +148,7 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
   onNext,
   onPrev,
   onFinish,
+  onPressOverlay,
   animationDuration = 300,
   contentPosition = "bottom",
   contentContainerStyle,
@@ -101,9 +178,9 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
     if (isVisible) {
       measureAttempts.current = 0;
       measureChild();
-      fadeIn();
+      startAnimation();
     } else {
-      fadeOut();
+      endAnimation();
     }
   }, [isVisible]);
 
@@ -149,7 +226,7 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
     }
   };
 
-  const fadeIn = () => {
+  const startAnimation = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: animationDuration,
@@ -157,12 +234,18 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
     }).start();
   };
 
-  const fadeOut = () => {
+  const endAnimation = () => {
     Animated.timing(fadeAnim, {
       toValue: 0,
       duration: animationDuration,
       useNativeDriver: true,
     }).start();
+  };
+
+  const getAnimationStyle = () => {
+    return {
+      opacity: fadeAnim,
+    };
   };
 
   const getSpotlightMask = (): SpotlightMask | null => {
@@ -360,69 +443,68 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
     };
 
     return (
-      <Animated.View
-        style={[
-          styles.overlay,
-          {
-            opacity: fadeAnim,
-          },
-        ]}
+      <TouchableOpacity
+        activeOpacity={1}
+        style={[styles.overlay]}
+        onPress={onPressOverlay}
       >
-        <Svg width={SCREEN_WIDTH} height={SCREEN_HEIGHT}>
-          <Defs>
-            <Mask id="spotlight">
-              <Rect
-                x="0"
-                y="0"
-                width={SCREEN_WIDTH}
-                height={SCREEN_HEIGHT}
-                fill="white"
-              />
-              <SpotlightShape />
-            </Mask>
-          </Defs>
-          <Rect
-            x="0"
-            y="0"
-            width={SCREEN_WIDTH}
-            height={SCREEN_HEIGHT}
-            fill={overlayColor}
-            mask="url(#spotlight)"
-          />
-        </Svg>
+        <Animated.View style={[styles.overlay, getAnimationStyle()]}>
+          <Svg width={SCREEN_WIDTH} height={SCREEN_HEIGHT}>
+            <Defs>
+              <Mask id="spotlight">
+                <Rect
+                  x="0"
+                  y="0"
+                  width={SCREEN_WIDTH}
+                  height={SCREEN_HEIGHT}
+                  fill="white"
+                />
+                <SpotlightShape />
+              </Mask>
+            </Defs>
+            <Rect
+              x="0"
+              y="0"
+              width={SCREEN_WIDTH}
+              height={SCREEN_HEIGHT}
+              fill={overlayColor}
+              mask="url(#spotlight)"
+            />
+          </Svg>
 
-        {/* Spotlight çerçevesi */}
-        <View
-          style={[
-            {
-              position: "absolute",
-              left: mask.x,
-              top: mask.y,
-              width: mask.width,
-              height: mask.height,
-              borderRadius: mask.borderRadius,
-              backgroundColor:
-                spotlightShape === "custom" && customShape?.backgroundColor
-                  ? customShape.backgroundColor
-                  : "transparent",
-            },
-            spotlightShape === "custom" && customShape
-              ? {
-                  padding: customShape.padding,
-                  borderWidth: customShape.borderWidth,
-                  borderColor: customShape.borderColor,
-                  borderStyle: customShape.borderStyle,
-                  shadowColor: customShape.shadowColor,
-                  shadowOffset: customShape.shadowOffset,
-                  shadowOpacity: customShape.shadowOpacity,
-                  shadowRadius: customShape.shadowRadius,
-                  elevation: customShape.elevation,
-                  opacity: customShape.opacity,
-                }
-              : {},
-          ]}
-        />
-      </Animated.View>
+          {/* Spotlight çerçevesi */}
+          <View
+            style={[
+              {
+                position: "absolute",
+                left: mask.x,
+                top: mask.y,
+                width: mask.width,
+                height: mask.height,
+                borderRadius: mask.borderRadius,
+                backgroundColor:
+                  spotlightShape === "custom" && customShape?.backgroundColor
+                    ? customShape.backgroundColor
+                    : "transparent",
+              },
+              spotlightShape === "custom" && customShape
+                ? {
+                    padding: customShape.padding,
+                    borderWidth: customShape.borderWidth,
+                    borderColor: customShape.borderColor,
+                    borderStyle: customShape.borderStyle,
+                    shadowColor: customShape.shadowColor,
+                    shadowOffset: customShape.shadowOffset,
+                    shadowOpacity: customShape.shadowOpacity,
+                    shadowRadius: customShape.shadowRadius,
+                    elevation: customShape.elevation,
+                    opacity: customShape.opacity,
+                  }
+                : {},
+            ]}
+          />
+        </Animated.View>
+      </TouchableOpacity>
     );
   };
 
@@ -438,7 +520,7 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
           styles.contentContainer,
           contentPositionStyle,
           contentContainerStyle,
-          { opacity: fadeAnim },
+          getAnimationStyle(),
         ]}
       >
         <Text style={[styles.contentText, contentTextStyle]}>{content}</Text>
@@ -449,7 +531,7 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
               onPress={onPrev}
             >
               <Text style={[styles.buttonText, buttonTextStyle]}>
-                {prevButtonText || "Önceki"}
+                {prevButtonText || "Previous"}
               </Text>
             </TouchableOpacity>
           )}
@@ -459,7 +541,7 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
           >
             <Text style={[styles.buttonText, buttonTextStyle]}>
               {nextButtonText ||
-                (onNext ? "Sonraki" : finishButtonText || "Bitir")}
+                (onNext ? "Next" : finishButtonText || "Finish")}
             </Text>
           </TouchableOpacity>
         </View>

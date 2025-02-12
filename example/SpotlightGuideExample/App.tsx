@@ -7,8 +7,13 @@ import {
   View,
   ScrollView,
   Image,
+  Dimensions,
+  TextStyle,
 } from 'react-native';
 import {SpotlightGuide} from '../../src';
+
+const {width} = Dimensions.get('window');
+const CARD_WIDTH = width - 32;
 
 function App(): React.JSX.Element {
   const [currentStep, setCurrentStep] = useState(0);
@@ -16,121 +21,147 @@ function App(): React.JSX.Element {
 
   // Define the steps for the spotlight guide
   const steps = [
-    // Basic circle spotlight example
+    // Circle Spotlight Example
     {
-      content:
-        'This is a basic circular spotlight highlighting a profile picture.',
+      content: 'Circle spotlight is perfect for profile pictures and icons',
       spotlightShape: 'circle',
       contentPosition: 'bottom',
-    },
-
-    // Rectangle spotlight with custom content position
-    {
-      content:
-        'Rectangle spotlight can be used to highlight card-like components.',
-      spotlightShape: 'rectangle',
-      contentPosition: 'bottom',
-    },
-
-    // Oval spotlight for longer content
-    {
-      content:
-        'Oval spotlight is perfect for highlighting longer text content or list items.',
-      spotlightShape: 'oval',
-      contentPosition: 'top',
-    },
-
-    // Custom spotlight with specific dimensions and offset
-    {
-      content:
-        'Custom spotlight shape with specific dimensions and offset position.',
-      spotlightShape: 'custom',
-      contentPosition: 'top',
-      // Define custom shape properties
-      customShape: {
-        width: 270,
-        height: 120,
-        borderRadius: 25,
-        offsetX: -30,
-        offsetY: 20,
-      },
-    },
-
-    // Advanced styling example with custom colors and styles
-    {
-      content:
-        'Advanced styling example with custom colors, borders, and button styles.',
-      spotlightShape: 'custom',
-      contentPosition: 'top',
-      // Custom overlay color
-      overlayColor: 'rgba(76, 175, 80, 0.7)',
-
-      // Content container customization
+      overlayColor: 'rgba(0, 0, 0, 0.8)',
+      onPressOverlay: () => setCurrentStep(prevStep => prevStep + 1),
       contentContainerStyle: {
-        backgroundColor: '#1E1E1E',
-        borderRadius: 15,
-        padding: 25,
-        borderWidth: 1,
-        borderColor: '#4CAF50',
+        backgroundColor: '#fff',
+        borderRadius: 16,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 4},
+        shadowOpacity: 0.1,
+        shadowRadius: 12,
+        elevation: 5,
       },
-
-      // Content text customization
       contentTextStyle: {
-        color: '#FFFFFF',
-        fontSize: 18,
+        fontSize: 16,
+        color: '#1a1a1a',
         lineHeight: 24,
         textAlign: 'center',
-      },
+        fontWeight: '600',
+      } as TextStyle,
+    },
 
-      // Button container customization
-      buttonContainerStyle: {
-        marginTop: 15,
-        gap: 15,
+    // Rectangle Spotlight Example with Custom Content
+    {
+      content: 'Rectangle spotlight with custom content styling',
+      contentPosition: 'bottom',
+      overlayColor: 'rgba(0, 0, 0, 0.8)',
+      onPressOverlay: () => setCurrentStep(prevStep => prevStep + 1),
+      contentContainerStyle: {
+        backgroundColor: '#1E1E1E',
+        borderRadius: 20,
+        padding: 24,
+        borderWidth: 1,
+        borderColor: '#007AFF',
+        shadowColor: '#007AFF',
+        shadowOffset: {width: 0, height: 4},
+        shadowOpacity: 0.2,
+        shadowRadius: 12,
+        elevation: 5,
       },
-
-      // Button style customization
-      buttonStyle: {
-        backgroundColor: '#4CAF50',
-        paddingVertical: 12,
-        paddingHorizontal: 25,
-        borderRadius: 10,
-      },
-
-      // Button text customization
-      buttonTextStyle: {
+      contentTextStyle: {
         color: '#FFFFFF',
         fontSize: 16,
-        fontWeight: '700',
+        lineHeight: 24,
+        textAlign: 'center',
+        fontWeight: '600',
+      } as TextStyle,
+      buttonContainerStyle: {
+        marginTop: 16,
+        gap: 12,
       },
+      buttonStyle: {
+        backgroundColor: '#007AFF',
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        borderRadius: 12,
+      },
+      buttonTextStyle: {
+        color: '#FFFFFF',
+        fontSize: 15,
+        fontWeight: '600',
+        letterSpacing: 0.3,
+      },
+    },
 
-      // Custom button texts
-      prevButtonText: 'Back',
-      nextButtonText: 'Next',
-      finishButtonText: 'Done',
-
-      // Custom spotlight shape
-      customShape: {
-        width: 180,
-        height: 180,
-        borderRadius: 15,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        borderWidth: 2,
-        borderColor: '#FFF',
-        borderStyle: 'dashed',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 4.65,
-        elevation: 8,
+    // Custom Spotlight with Animation
+    {
+      content: 'Spotlight with custom overlay and animation settings',
+      spotlightShape: 'rectangle',
+      contentPosition: 'top',
+      overlayColor: 'rgba(52, 73, 94, 0.9)',
+      onPressOverlay: () => setCurrentStep(prevStep => prevStep + 1),
+      animationDuration: 400,
+      pulseAnimation: true,
+      contentContainerStyle: {
+        backgroundColor: '#34495e',
+        borderRadius: 16,
         padding: 20,
+        borderLeftWidth: 4,
+        borderLeftColor: '#1abc9c',
+      },
+      contentTextStyle: {
+        fontSize: 16,
+        color: '#fff',
+        lineHeight: 24,
+        textAlign: 'center',
+        fontWeight: '600',
+      } as TextStyle,
+      buttonStyle: {
+        backgroundColor: '#1abc9c',
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        borderRadius: 12,
+      },
+      buttonTextStyle: {
+        color: '#FFFFFF',
+        fontSize: 15,
+        fontWeight: '600',
+        letterSpacing: 0.3,
+      },
+    },
+
+    // Custom Spotlight Example
+    {
+      content: 'Custom spotlight with specific dimensions and styling',
+      spotlightShape: 'custom',
+      contentPosition: 'top',
+      overlayColor: 'rgba(0, 0, 0, 0.8)',
+      customShape: {
+        width: CARD_WIDTH,
+        height: 240,
+        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+        borderWidth: 2,
+        borderColor: '#007AFF',
+        borderStyle: 'dashed',
+        offsetY: -60,
+      },
+      contentContainerStyle: {
+        backgroundColor: '#fff',
+        borderRadius: 16,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 4},
+        shadowOpacity: 0.1,
+        shadowRadius: 12,
+        elevation: 5,
+      },
+      contentTextStyle: {
+        fontSize: 16,
+        color: '#1a1a1a',
+        lineHeight: 24,
+        textAlign: 'center',
+        fontWeight: '500',
       },
     },
   ];
 
-  // Handle navigation between steps
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
@@ -152,87 +183,220 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Basic Circle Spotlight */}
+      {/* Header */}
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.welcomeText}>Welcome back</Text>
+          <Text style={styles.nameText}>John Doe</Text>
+        </View>
+        {/* Circle Spotlight */}
         <SpotlightGuide
           isVisible={showGuide && currentStep === 0}
           {...steps[0]}
           onNext={handleNext}>
-          <View style={styles.avatar}>
-            <Image
-              source={{
-                uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw4xIzlTTRJKIQB1tq1Jbs5Rfj7hU6h1UtPg&s',
-              }}
-              style={styles.avatarImage}
-            />
-          </View>
+          <TouchableOpacity style={styles.avatarContainer}>
+            <View style={styles.avatar}>
+              <Image
+                source={{
+                  uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw4xIzlTTRJKIQB1tq1Jbs5Rfj7hU6h1UtPg&s',
+                }}
+                style={styles.avatarImage}
+              />
+              <View style={styles.onlineBadge} />
+            </View>
+          </TouchableOpacity>
         </SpotlightGuide>
+      </View>
 
-        {/* Rectangle Spotlight */}
+      <ScrollView
+        style={styles.content}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}>
+        {/* Rectangle Spotlight with Custom Content */}
         <SpotlightGuide
           isVisible={showGuide && currentStep === 1}
           {...steps[1]}
           onNext={handleNext}
           onPrev={handlePrev}>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Feature Card</Text>
-            <Text style={styles.cardText}>
-              Example card component with rectangle spotlight.
-            </Text>
+          <View style={styles.analyticsCard}>
+            <View style={styles.analyticsHeader}>
+              <Text style={styles.cardTitle}>Daily Statistics</Text>
+              <View style={styles.analyticsDate}>
+                <Text style={styles.dateText}>Today</Text>
+              </View>
+            </View>
+            <View style={styles.analyticsGrid}>
+              <View style={styles.analyticsItem}>
+                <View
+                  style={[
+                    styles.analyticsIcon,
+                    {backgroundColor: 'rgba(0, 122, 255, 0.1)'},
+                  ]}>
+                  <View
+                    style={[styles.iconDot, {backgroundColor: '#007AFF'}]}
+                  />
+                </View>
+                <Text style={styles.analyticsValue}>24</Text>
+                <Text style={styles.analyticsLabel}>Tasks</Text>
+              </View>
+              <View style={styles.analyticsItem}>
+                <View
+                  style={[
+                    styles.analyticsIcon,
+                    {backgroundColor: 'rgba(76, 175, 80, 0.1)'},
+                  ]}>
+                  <View
+                    style={[styles.iconDot, {backgroundColor: '#4CAF50'}]}
+                  />
+                </View>
+                <Text style={styles.analyticsValue}>12</Text>
+                <Text style={styles.analyticsLabel}>Meetings</Text>
+              </View>
+              <View style={styles.analyticsItem}>
+                <View
+                  style={[
+                    styles.analyticsIcon,
+                    {backgroundColor: 'rgba(255, 149, 0, 0.1)'},
+                  ]}>
+                  <View
+                    style={[styles.iconDot, {backgroundColor: '#FF9500'}]}
+                  />
+                </View>
+                <Text style={styles.analyticsValue}>89%</Text>
+                <Text style={styles.analyticsLabel}>Efficiency</Text>
+              </View>
+            </View>
           </View>
         </SpotlightGuide>
 
-        {/* Oval Spotlight */}
+        {/* Oval Spotlight yerine yeni örnek */}
         <SpotlightGuide
           isVisible={showGuide && currentStep === 2}
           {...steps[2]}
           onPrev={handlePrev}
           onNext={handleNext}>
-          <View style={styles.longContent}>
-            <Text style={styles.longContentText}>
-              Example of a longer content section with oval spotlight shape.
-              Perfect for highlighting paragraphs or list items.
-            </Text>
+          <View style={styles.activitiesCard}>
+            <View style={styles.cardHeader}>
+              <View>
+                <Text style={styles.cardTitle}>Recent Activities</Text>
+                <Text style={styles.cardSubtitle}>Last 24 hours</Text>
+              </View>
+              <TouchableOpacity
+                style={[
+                  styles.seeAllButton,
+                  {backgroundColor: 'rgba(26, 188, 156, 0.1)'},
+                ]}>
+                <Text style={[styles.seeAllText, {color: '#1abc9c'}]}>
+                  See All
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.activityList}>
+              <View style={styles.activityItem}>
+                <View
+                  style={[
+                    styles.activityIcon,
+                    {backgroundColor: 'rgba(26, 188, 156, 0.1)'},
+                  ]}>
+                  <View
+                    style={[styles.activityDot, {backgroundColor: '#1abc9c'}]}
+                  />
+                </View>
+                <View style={styles.activityContent}>
+                  <Text style={styles.activityText}>New project created</Text>
+                  <Text style={styles.activityTime}>14:30</Text>
+                </View>
+              </View>
+              <View style={styles.activityItem}>
+                <View
+                  style={[
+                    styles.activityIcon,
+                    {backgroundColor: 'rgba(26, 188, 156, 0.1)'},
+                  ]}>
+                  <View
+                    style={[styles.activityDot, {backgroundColor: '#1abc9c'}]}
+                  />
+                </View>
+                <View style={styles.activityContent}>
+                  <Text style={styles.activityText}>Task completed</Text>
+                  <Text style={styles.activityTime}>12:15</Text>
+                </View>
+              </View>
+              <View style={styles.activityItem}>
+                <View
+                  style={[
+                    styles.activityIcon,
+                    {backgroundColor: 'rgba(26, 188, 156, 0.1)'},
+                  ]}>
+                  <View
+                    style={[styles.activityDot, {backgroundColor: '#1abc9c'}]}
+                  />
+                </View>
+                <View style={styles.activityContent}>
+                  <Text style={styles.activityText}>Meeting reminder</Text>
+                  <Text style={styles.activityTime}>10:00</Text>
+                </View>
+              </View>
+            </View>
           </View>
         </SpotlightGuide>
 
-        {/* Custom Shape Spotlight */}
+        {/* Custom Spotlight */}
         <SpotlightGuide
           isVisible={showGuide && currentStep === 3}
           {...steps[3]}
           onPrev={handlePrev}
-          onNext={handleNext}>
-          <View style={[styles.customContent, {width: 270}]}>
-            <Text style={styles.customContentText}>
-              Custom shaped spotlight with specific dimensions and offset
-              position. You can adjust size, position, and shape as needed.
-            </Text>
-          </View>
-        </SpotlightGuide>
-
-        {/* Advanced Styling Example */}
-        <SpotlightGuide
-          isVisible={showGuide && currentStep === 4}
-          {...steps[4]}
-          onPrev={handlePrev}
           onFinish={() => setShowGuide(false)}>
-          <View style={styles.advancedContent}>
-            <Text style={styles.advancedContentText}>
-              Advanced styling example with custom colors, borders, shadows, and
-              button styles.
+          <View style={styles.customSpotlightCard}>
+            <View style={styles.customHeader}>
+              <View style={styles.customIcon}>
+                <View style={styles.customDot} />
+              </View>
+              <Text style={styles.customTitle}>Custom Spotlight Shape</Text>
+            </View>
+            <Text style={styles.customDescription}>
+              This example demonstrates a custom spotlight shape with specific
+              dimensions, dashed borders, and a semi-transparent background.
+              Perfect for highlighting special features or important content
+              areas.
             </Text>
+            <View style={styles.customFeatures}>
+              <View style={styles.featureItem}>
+                <View style={styles.featureIcon} />
+                <Text style={styles.featureText}>Custom Dimensions</Text>
+              </View>
+              <View style={styles.featureItem}>
+                <View
+                  style={[
+                    styles.featureIcon,
+                    {backgroundColor: 'rgba(76, 175, 80, 0.1)'},
+                  ]}
+                />
+                <Text style={styles.featureText}>Dashed Borders</Text>
+              </View>
+              <View style={styles.featureItem}>
+                <View
+                  style={[
+                    styles.featureIcon,
+                    {backgroundColor: 'rgba(255, 149, 0, 0.1)'},
+                  ]}
+                />
+                <Text style={styles.featureText}>Semi-transparent BG</Text>
+              </View>
+            </View>
           </View>
         </SpotlightGuide>
-
-        {/* Restart Button */}
-        {!showGuide && (
-          <TouchableOpacity
-            style={styles.restartButton}
-            onPress={handleRestart}>
-            <Text style={styles.buttonText}>Restart Guide</Text>
-          </TouchableOpacity>
-        )}
       </ScrollView>
+
+      {/* Restart Button */}
+      {!showGuide && (
+        <TouchableOpacity
+          style={styles.restartButton}
+          onPress={handleRestart}
+          activeOpacity={0.8}>
+          <Text style={styles.buttonText}>Restart Guide</Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 }
@@ -242,14 +406,44 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5F5F5',
   },
-  scrollContent: {
-    padding: 20,
-    gap: 20,
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.05)',
+  },
+  welcomeText: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 4,
+    letterSpacing: 0.3,
+  },
+  nameText: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#1a1a1a',
+    letterSpacing: 0.3,
+  },
+  avatarContainer: {
+    position: 'relative',
+    padding: 4,
   },
   avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 100,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    borderWidth: 2,
+    borderColor: '#fff',
     overflow: 'hidden',
   },
   avatarImage: {
@@ -257,94 +451,252 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
+  onlineBadge: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: '#4CAF50',
+    borderWidth: 2,
+    borderColor: '#fff',
+  },
+  content: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  analyticsCard: {
+    backgroundColor: '#fff',
+    borderRadius: 24,
+    padding: 20,
+    marginVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 5,
+    width: CARD_WIDTH,
+  },
+  analyticsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  analyticsDate: {
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+  },
+  dateText: {
+    color: '#007AFF',
+    fontSize: 14,
     fontWeight: '600',
   },
-  card: {
-    backgroundColor: 'white',
-    padding: 16,
-    borderRadius: 12,
+  analyticsGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 8,
+  },
+  analyticsItem: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  analyticsIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  iconDot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+  },
+  analyticsValue: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#1a1a1a',
+    marginBottom: 4,
+    letterSpacing: 0.5,
+  },
+  analyticsLabel: {
+    fontSize: 13,
+    color: '#666',
+    letterSpacing: 0.3,
+  },
+  activitiesCard: {
+    backgroundColor: '#fff',
+    borderRadius: 24,
+    padding: 20,
+    marginVertical: 8,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 12,
+    elevation: 5,
+    width: CARD_WIDTH,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 20,
   },
   cardTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 8,
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1a1a1a',
+    letterSpacing: 0.3,
   },
-  cardText: {
+  cardSubtitle: {
     fontSize: 14,
     color: '#666',
+    marginTop: 4,
+    letterSpacing: 0.3,
   },
-  longContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+  seeAllButton: {
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
   },
-  longContentText: {
-    fontSize: 15,
-    lineHeight: 22,
-    color: '#444',
+  seeAllText: {
+    color: '#007AFF',
+    fontSize: 14,
+    fontWeight: '600',
   },
-  restartButton: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    alignSelf: 'center',
-    marginTop: 20,
+  activityList: {
+    gap: 16,
   },
-  customContent: {
-    backgroundColor: '#F0F8FF',
-    padding: 15,
-    borderRadius: 25,
-    marginTop: 20,
-    borderWidth: 1,
-    borderColor: '#007AFF',
+  activityItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  customContentText: {
-    fontSize: 16,
-    color: '#333',
-    textAlign: 'center',
-  },
-  coloredContent: {
-    width: 200,
-    height: 200,
-    padding: 20,
+  activityIcon: {
+    width: 40,
+    height: 40,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#2196F3',
+    marginRight: 12,
   },
-  coloredContentText: {
-    fontSize: 16,
-    color: '#333',
-    textAlign: 'center',
+  activityDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
   },
-  advancedContent: {
-    width: 180,
-    height: 180,
+  activityContent: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  activityText: {
+    fontSize: 15,
+    color: '#1a1a1a',
+    fontWeight: '500',
+    letterSpacing: 0.3,
+  },
+  activityTime: {
+    fontSize: 13,
+    color: '#666',
+    letterSpacing: 0.3,
+  },
+  customSpotlightCard: {
+    backgroundColor: '#fff',
+    borderRadius: 24,
+    padding: 24,
+    marginVertical: 8,
+    width: CARD_WIDTH,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 5,
+    minHeight: 240,
+  },
+  customHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  customIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#4CAF50',
-    borderRadius: 15,
-    padding: 20,
+    marginRight: 12,
   },
-  advancedContentText: {
-    fontSize: 16,
-    color: '#FFF',
+  customDot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#007AFF',
+  },
+  customTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1a1a1a',
+    letterSpacing: 0.3,
+  },
+  customDescription: {
+    fontSize: 15,
+    color: '#666',
+    lineHeight: 24,
+    letterSpacing: 0.3,
+  },
+  customFeatures: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 24,
+    paddingTop: 24,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(0,0,0,0.05)',
+  },
+  featureItem: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  featureIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+    marginBottom: 8,
+  },
+  featureText: {
+    fontSize: 13,
+    color: '#666',
     textAlign: 'center',
+    letterSpacing: 0.3,
+  },
+  restartButton: {
+    backgroundColor: '#007AFF',
+    margin: 16,
+    padding: 16,
+    borderRadius: 16,
+    alignItems: 'center',
+    shadowColor: '#007AFF',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
 });
 
