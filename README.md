@@ -1,8 +1,6 @@
 # 🎯 React Native Spotlight Guide
 
-<div align="center">
-  <img src="assets/logo.png" alt="React Native Spotlight Guide" width="200"/>
-  
+<div align="center">  
   <p align="center">
     A modern, customizable, and high-performance spotlight/walkthrough library for React Native
   </p>
@@ -22,8 +20,7 @@
 
 ## 🎥 Demo
 
-![]([https://github.com/Repository_Name/GIF_Name.gif'iniz](https://github.com/FurkanKayaDev/react-native-spotlight-guide/blob/main/demo/demo.gif
-))
+![]([https://github.com/Repository_Name/GIF_Name.gif'iniz](https://github.com/FurkanKayaDev/react-native-spotlight-guide/blob/main/demo/demo.gif))
 
 ## ✨ Features
 
