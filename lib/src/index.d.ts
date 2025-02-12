@@ -1,2 +1,2 @@
-export { SpotlightGuide } from "./SpotlightGuide";
-export type { SpotlightGuideProps } from "./SpotlightGuide";
+export * from "./components/SpotlightGuide";
+export * from "./types/spotlight.types";

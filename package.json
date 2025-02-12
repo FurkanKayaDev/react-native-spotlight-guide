@@ -1,6 +1,6 @@
 {
   "name": "react-native-spotlight-guide",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A modern, customizable and high-performance spotlight/walkthrough library for React Native with TypeScript support",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

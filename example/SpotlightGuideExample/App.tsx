@@ -97,7 +97,7 @@ function App(): React.JSX.Element {
       contentPosition: 'top',
       overlayColor: 'rgba(52, 73, 94, 0.9)',
       onPressOverlay: () => setCurrentStep(prevStep => prevStep + 1),
-      animationDuration: 400,
+      animationDuration: 300,
       pulseAnimation: true,
       contentContainerStyle: {
         backgroundColor: '#34495e',

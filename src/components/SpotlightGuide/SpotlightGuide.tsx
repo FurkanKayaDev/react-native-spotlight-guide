@@ -62,6 +62,7 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
   } | null>(null);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const contentFadeAnim = useRef(new Animated.Value(0)).current;
   const childRef = useRef<View>(null);
   const measureAttempts = useRef(0);
 
@@ -94,19 +95,33 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
   };
 
   const fadeIn = () => {
-    Animated.timing(fadeAnim, {
-      toValue: overlayOpacity,
-      duration: animationDuration,
-      useNativeDriver: true,
-    }).start();
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: overlayOpacity,
+        duration: animationDuration,
+        useNativeDriver: true,
+      }),
+      Animated.timing(contentFadeAnim, {
+        toValue: 1,
+        duration: animationDuration,
+        useNativeDriver: true,
+      }),
+    ]).start();
   };
 
   const fadeOut = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: animationDuration,
-      useNativeDriver: true,
-    }).start();
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: animationDuration,
+        useNativeDriver: true,
+      }),
+      Animated.timing(contentFadeAnim, {
+        toValue: 0,
+        duration: animationDuration,
+        useNativeDriver: true,
+      }),
+    ]).start();
   };
 
   const mask = getSpotlightMask(
@@ -126,7 +141,7 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
       >
         {children}
       </View>
-      <Modal visible={isVisible} transparent animationType="fade">
+      <Modal visible={isVisible} transparent animationType="none">
         <SpotlightOverlay
           spotlightShape={spotlightShape}
           customShape={customShape}
@@ -149,6 +164,7 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
           onPrev={onPrev}
           onFinish={onFinish}
           mask={mask}
+          fadeAnim={contentFadeAnim}
         />
       </Modal>
     </>
