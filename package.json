@@ -1,0 +1,39 @@
+{
+  "name": "react-native-spotlight-guide",
+  "version": "1.0.0",
+  "description": "Modern, özelleştirilebilir ve animasyonlu React Native spotlight/walkthrough kütüphanesi",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "prepare": "npm run build",
+    "test": "jest"
+  },
+  "keywords": [
+    "react-native",
+    "spotlight",
+    "walkthrough",
+    "onboarding",
+    "guide",
+    "tooltip",
+    "tutorial"
+  ],
+  "author": "Sizin İsminiz",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-svg": ">=13.0.0"
+  },
+  "dependencies": {
+    "react-native-svg": "^13.14.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-native": "^0.72.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "react": "^18.2.0",
+    "react-native": "^0.72.0"
+  }
+}

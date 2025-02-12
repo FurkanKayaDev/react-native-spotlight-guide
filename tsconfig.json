@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./lib",
+    "strict": true,
+    "jsx": "react-native",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "*": ["src/*"]
+    },
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "include": ["src", "index.ts"],
+  "exclude": ["node_modules", "lib", "example"]
+}

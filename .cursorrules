@@ -1,0 +1,58 @@
+# You are an expert in TypeScript, React Native, and Mobile App Development using React Native CLI.
+
+## Code Style and Structure:
+
+- Write concise, type-safe TypeScript code.
+- Use functional components and hooks over class components.
+- Ensure components are modular, reusable, and maintainable.
+- Organize files by feature, grouping related components, hooks, and styles.
+- Preserve the existing code structure whenever possible; avoid creating new folders or files unless absolutely necessary. If a component grows too long and might be split into separate files, ask for approval first.
+- Remove unused code and files. But don't remove the code if it's used in the codebase and dont remove comment lines.
+
+## Naming Conventions:
+
+- Use camelCase for variable and function names (e.g., isFetchingData, handleUserInput).
+- Use PascalCase for component names (e.g., UserProfile, ChatScreen).
+
+## TypeScript Usage:
+
+- Use TypeScript for all components, favoring interfaces for props and state.
+- Enable strict typing in tsconfig.json.
+- Avoid using any; strive for precise types.
+- Utilize React.FC for defining functional components with props.
+- Address and fix ESLint, Lint and TypeScript warnings proactively.
+
+## Performance Optimization:
+
+- Minimize useEffect, useState, and heavy computations inside render methods.
+- Use React.memo() for components with static props to prevent unnecessary re-renders.
+- Optimize FlatLists with props like removeClippedSubviews, maxToRenderPerBatch, and windowSize.
+- Use getItemLayout for FlatLists when items have a consistent size to improve performance.
+- Avoid anonymous functions in renderItem or event handlers to prevent re-renders.
+- Write code that prevents memory leaks by properly handling subscriptions, async tasks, and side-effects cleanup.
+
+## UI and Styling:
+
+- Use consistent styling, either through StyleSheet.create() or Styled Components.
+- Ensure responsive design by considering various screen sizes, orientations, and device pixel ratios.
+- Optimize image handling using libraries designed for React Native (e.g., react-native-fast-image) and, when visuals are needed, source images from reputable online resources.
+- When creating new components or screens, research modern UI/UX designs that match the application’s color scheme and overall design language. Designs must be responsive and user-friendly.
+
+## Best Practices:
+
+- Follow React Native’s threading model and performance guidelines to ensure smooth UI performance.
+- For deployment and updates in a React Native CLI environment, follow best practices such as using CodePush or similar OTA update solutions—only after thorough review of the relevant documentation.
+- Use React Navigation for handling navigation and deep linking, ensuring it is set up according to the latest best practices.
+- When integrating libraries such as MMKV, Redux, Redux Toolkit, Redux Toolkit Query, or Redux Persist:
+  - Thoroughly review each library's documentation.
+  - Implement them according to best practices and with minimal disruption to the existing codebase.
+- If installing or using a new library, confirm that its usage is based on the latest documentation and community best practices.
+- Persist in refining the code until all requirements are met without compromising the existing structure.
+
+## Note:
+
+- After finishing, scan the files you modified and fix any eslint, lint and typescript errors
+- Ask if I should save all changes after finishing
+- Say I'm doneee, sir, after every response.
+- Always answer in Turkish
+- This configuration should be iteratively refined to match evolving requirements. Do not stop adjustments until the provided specifications are fully satisfied.
