@@ -23,9 +23,7 @@
 ## 🎥 Demo
 
 <div align="center">
-  <video src="Demo/demo.mp4" width="300" controls>
-    <a href="Demo/demo.mp4">Demo videosu için tıklayın</a>
-  </video>
+  <img src="Demo/demo.gif" alt="React Native Spotlight Guide Demo" width="300"/>
 </div>
 
 ## ✨ Features
