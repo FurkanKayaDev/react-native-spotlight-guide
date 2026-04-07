@@ -3,7 +3,7 @@ import { SpotlightMask, CustomSpotlightShape } from "../types/spotlight.types";
 import { SPOTLIGHT_DEFAULTS } from "../constants";
 
 export const measureChildInWindow = (
-  childRef: React.RefObject<View>,
+  childRef: React.RefObject<View | null>,
   callback: (
     measures: {
       x: number;

@@ -60,7 +60,7 @@ const spotlight_utils_1 = require("../../utils/spotlight.utils");
  * </SpotlightGuide>
  * ```
  */
-const SpotlightGuide = ({ children, isVisible, content, spotlightShape = constants_1.SPOTLIGHT_DEFAULTS.SHAPE, customShape, spotlightPadding = constants_1.SPOTLIGHT_DEFAULTS.PADDING, overlayOpacity = constants_1.SPOTLIGHT_DEFAULTS.OVERLAY_OPACITY, overlayColor = constants_1.SPOTLIGHT_DEFAULTS.OVERLAY_COLOR, onNext, onPrev, onFinish, animationDuration = constants_1.SPOTLIGHT_DEFAULTS.ANIMATION_DURATION, contentPosition = constants_1.SPOTLIGHT_DEFAULTS.CONTENT_POSITION, contentContainerStyle, contentTextStyle, buttonContainerStyle, buttonStyle, buttonTextStyle, prevButtonText, nextButtonText, finishButtonText, }) => {
+const SpotlightGuide = ({ children, isVisible, content, spotlightShape = constants_1.SPOTLIGHT_DEFAULTS.SHAPE, customShape, spotlightPadding = constants_1.SPOTLIGHT_DEFAULTS.PADDING, overlayOpacity = constants_1.SPOTLIGHT_DEFAULTS.OVERLAY_OPACITY, overlayColor = constants_1.SPOTLIGHT_DEFAULTS.OVERLAY_COLOR, onNext, onPrev, onFinish, animationDuration = constants_1.SPOTLIGHT_DEFAULTS.ANIMATION_DURATION, contentPosition = constants_1.SPOTLIGHT_DEFAULTS.CONTENT_POSITION, contentContainerStyle, contentTextStyle, buttonContainerStyle, buttonStyle, buttonTextStyle, prevButtonText, nextButtonText, finishButtonText, hideButtons, }) => {
     const [childMeasures, setChildMeasures] = (0, react_1.useState)(null);
     const fadeAnim = (0, react_1.useRef)(new react_native_1.Animated.Value(0)).current;
     const contentFadeAnim = (0, react_1.useRef)(new react_native_1.Animated.Value(0)).current;
@@ -126,7 +126,7 @@ const SpotlightGuide = ({ children, isVisible, content, spotlightShape = constan
       </react_native_1.View>
       <react_native_1.Modal visible={isVisible} transparent animationType="none">
         <SpotlightOverlay_1.SpotlightOverlay spotlightShape={spotlightShape} customShape={customShape} overlayColor={overlayColor} mask={mask} fadeAnim={fadeAnim}/>
-        <SpotlightContent_1.SpotlightContent content={content} contentPosition={contentPosition} contentContainerStyle={contentContainerStyle} contentTextStyle={contentTextStyle} buttonContainerStyle={buttonContainerStyle} buttonStyle={buttonStyle} buttonTextStyle={buttonTextStyle} prevButtonText={prevButtonText} nextButtonText={nextButtonText} finishButtonText={finishButtonText} onNext={onNext} onPrev={onPrev} onFinish={onFinish} mask={mask} fadeAnim={contentFadeAnim}/>
+        <SpotlightContent_1.SpotlightContent content={content} contentPosition={contentPosition} contentContainerStyle={contentContainerStyle} contentTextStyle={contentTextStyle} buttonContainerStyle={buttonContainerStyle} buttonStyle={buttonStyle} buttonTextStyle={buttonTextStyle} prevButtonText={prevButtonText} nextButtonText={nextButtonText} finishButtonText={finishButtonText} onNext={onNext} onPrev={onPrev} onFinish={onFinish} mask={mask} fadeAnim={contentFadeAnim} hideButtons={hideButtons}/>
       </react_native_1.Modal>
     </>);
 };

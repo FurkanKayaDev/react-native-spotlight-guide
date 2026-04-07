@@ -1,14 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Animated, LayoutChangeEvent, Modal, View } from "react-native";
-import { SpotlightGuideProps } from "../../types/spotlight.types";
-import { styles } from "./styles";
-import { SpotlightContent } from "./SpotlightContent";
-import { SpotlightOverlay } from "./SpotlightOverlay";
-import { SPOTLIGHT_DEFAULTS } from "../../constants";
-import {
-  getSpotlightMask,
-  measureChildInWindow,
-} from "../../utils/spotlight.utils";
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, LayoutChangeEvent, Modal, View } from 'react-native';
+import { SpotlightGuideProps } from '../../types/spotlight.types';
+import { styles } from './styles';
+import { SpotlightContent } from './SpotlightContent';
+import { SpotlightOverlay } from './SpotlightOverlay';
+import { SPOTLIGHT_DEFAULTS } from '../../constants';
+import { getSpotlightMask, measureChildInWindow } from '../../utils/spotlight.utils';
 
 /**
  * SpotlightGuide Component
@@ -51,6 +48,7 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
   prevButtonText,
   nextButtonText,
   finishButtonText,
+  hideButtons,
 }) => {
   const [childMeasures, setChildMeasures] = useState<{
     x: number;
@@ -124,21 +122,11 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
     ]).start();
   };
 
-  const mask = getSpotlightMask(
-    childMeasures,
-    spotlightShape,
-    customShape,
-    spotlightPadding
-  );
+  const mask = getSpotlightMask(childMeasures, spotlightShape, customShape, spotlightPadding);
 
   return (
     <>
-      <View
-        ref={childRef}
-        style={styles.childWrapper}
-        onLayout={onChildLayout}
-        collapsable={false}
-      >
+      <View ref={childRef} style={styles.childWrapper} onLayout={onChildLayout} collapsable={false}>
         {children}
       </View>
       <Modal visible={isVisible} transparent animationType="none">
@@ -165,6 +153,7 @@ export const SpotlightGuide: React.FC<SpotlightGuideProps> = ({
           onFinish={onFinish}
           mask={mask}
           fadeAnim={contentFadeAnim}
+          hideButtons={hideButtons}
         />
       </Modal>
     </>

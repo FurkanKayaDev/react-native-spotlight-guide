@@ -1,5 +1,5 @@
-import React from "react";
-import { SpotlightGuideProps } from "../../types/spotlight.types";
+import React from 'react';
+import { SpotlightGuideProps } from '../../types/spotlight.types';
 /**
  * SpotlightGuide Component
  * A component that creates a spotlight effect to highlight UI elements with a guided tour.

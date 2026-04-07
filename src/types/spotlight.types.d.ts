@@ -1,6 +1,6 @@
-import { ViewStyle, TextStyle, Animated } from "react-native";
-export type SpotlightShape = "circle" | "oval" | "rectangle" | "custom";
-export type ContentPosition = "top" | "bottom" | "left" | "right";
+import { ViewStyle, TextStyle, Animated } from 'react-native';
+export type SpotlightShape = 'circle' | 'oval' | 'rectangle' | 'custom';
+export type ContentPosition = 'top' | 'bottom' | 'left' | 'right';
 /**
  * Interface for custom spotlight shape properties
  * @interface CustomSpotlightShape
@@ -49,7 +49,7 @@ export interface SpotlightMask {
 export interface SpotlightGuideProps {
     children: React.ReactNode;
     isVisible: boolean;
-    content: string;
+    content: React.ReactNode;
     spotlightShape?: SpotlightShape | string;
     customShape?: CustomSpotlightShape;
     spotlightPadding?: number;
@@ -68,9 +68,10 @@ export interface SpotlightGuideProps {
     prevButtonText?: string;
     nextButtonText?: string;
     finishButtonText?: string;
+    hideButtons?: boolean;
 }
 export interface SpotlightContentProps {
-    content: string;
+    content: React.ReactNode;
     contentPosition: ContentPosition | string;
     contentContainerStyle?: ViewStyle;
     contentTextStyle?: TextStyle;
@@ -85,6 +86,7 @@ export interface SpotlightContentProps {
     onFinish?: () => void;
     mask: SpotlightMask | null;
     fadeAnim: Animated.Value;
+    hideButtons?: boolean;
 }
 export interface SpotlightOverlayProps {
     spotlightShape: SpotlightShape | string;

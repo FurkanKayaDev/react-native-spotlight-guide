@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { SpotlightMask, CustomSpotlightShape } from "../types/spotlight.types";
-export declare const measureChildInWindow: (childRef: React.RefObject<View>, callback: (measures: {
+export declare const measureChildInWindow: (childRef: React.RefObject<View | null>, callback: (measures: {
     x: number;
     y: number;
     width: number;
